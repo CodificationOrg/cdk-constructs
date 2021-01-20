@@ -1,0 +1,37 @@
+name: CI
+
+on: 
+  push:
+    branchesignore:
+      - master
+    tags-ignore:
+      - 'v*'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Get yarn cache
+      id: yarn-cache
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+    - uses: actions/cache@v1
+      with:
+        path: ${{ steps.yarn-cache.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+    
+    - name: Use Node.js 12
+      uses: actions/setup-node@v2
+      with:
+        node-version: '12'
+
+    - name: yarn install
+      run: yarn install --frozen-lockfile
+
+    - name: yarn build
+      run:  yarn build
