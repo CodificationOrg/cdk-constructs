@@ -1,0 +1,15 @@
+{
+  "npmClient": "yarn",
+  "command": {
+    "version": {
+      "allowBranch": "master",
+      "message": "%s [skip-ci]"
+    }
+  },
+  "packages": [
+    "packages/*"
+  ],
+  "version": "0.0.0",
+  "stream": true,
+  "useWorkspaces": true
+}

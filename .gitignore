@@ -52,6 +52,7 @@ jspm_packages/
 # dotenv environment variables file
 .env
 .config
+.secrets
 
 # next.js build output
 .next
@@ -72,3 +73,9 @@ reports
 # Rush files
 common/temp/**
 package-deps.json
+
+# CDK Context & Staging files
+cdk.context.json
+.cdk.staging/
+cdk.out/
+*.tabl.json

@@ -8,13 +8,14 @@ const isProduction = buildConfig.production;
 const webpackConfiguration = {
     mode: isProduction ? 'production' : 'development',
     entry: {
-        'sns-email-forms': path.join(__dirname, buildConfig.libES6Folder, 'lambda', 'EmailFormHandler.js')
+        'sns-email-forms': path.join(__dirname, buildConfig.libES6Folder, 'lambda/handler', 'EmailFormHandler.js')
     },
     output: {
         libraryTarget: 'umd',
         path: path.join(__dirname, buildConfig.distFolder),
         filename: `[name].js`,
     },
+    devtool: 'source-map',
     externals: ['aws-sdk'],
     target: 'node'
 };
