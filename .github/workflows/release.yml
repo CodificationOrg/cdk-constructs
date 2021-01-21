@@ -1,0 +1,49 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - master
+    tags-ignore:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[skip-ci]')"
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Configure CI Git User
+        run: |
+          git config --global user.name '@deploy'
+          git config --global user.email 'deploy@users.noreply.github.com'
+          git remote set-url origin https://$GITHUB_ACTOR:$GITHUB_PAT@github.com/CodificationOrg/cdk-constructs
+        env:
+          GITHUB_PAT: ${{ secrets.GH_TOKEN }}
+
+      - name: Checkout and pull branch
+        run: git checkout master && git pull
+
+      - name: Get yarn cache
+        id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - uses: actions/cache@v2
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Use Node.js 12
+        uses: actions/setup-node@v2
+        with:
+          node-version: "12"
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Release
+        run: yarn release
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
