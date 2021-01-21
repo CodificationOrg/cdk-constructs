@@ -31,7 +31,6 @@
     "clean": "gulp clean",
     "test": "gulp test --clean",
     "build": "gulp --clean --production",
-    "preversion": "yarn build",
     "version": "git add -A .",
     "postversion": "git push && git push --tags",
     "diff": "cdk diff",
