@@ -1,6 +1,6 @@
 {
   "name": "@codification/cdk-sns-email-forms",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A cdk construct to simplify emailing form submissions using SNS.",
   "author": "William Weiss <william@codification.org>",
   "license": "MIT",
@@ -48,19 +48,19 @@
     "cdk": "^1.76.0"
   },
   "devDependencies": {
+    "@codification/cutwater-build-aws": "^0.x",
     "@codification/cutwater-build-core": "^0.x",
-    "lambda": "^0.10.3",
+    "@codification/cutwater-build-web": "^0.x",
     "@codification/cutwater-core": "^0.x",
     "@middy/core": "^1.0.0",
     "@middy/http-cors": "^1.0.0",
+    "@types/aws-lambda": "^8.10.68",
     "ajv": "^7.0.2",
     "ajv-formats": "^1.5.1",
     "aws-lambda": "^1.0.6",
+    "aws-sdk": "^2.817.0",
     "google-recaptcha": "^1.1.0",
-    "mustache": "^4.1.0",
-    "@codification/cutwater-build-aws": "^0.x",
-    "@codification/cutwater-build-web": "^0.x",
-    "@types/aws-lambda": "^8.10.68",
-    "aws-sdk": "^2.817.0"
+    "lambda": "^0.10.3",
+    "mustache": "^4.1.0"
   }
 }
