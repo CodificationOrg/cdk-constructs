@@ -1,7 +1,10 @@
+import { Config } from '@codification/cutwater-core';
 import { Logger, LoggerFactory } from '@codification/cutwater-logging';
 import middy from '@middy/core';
 import cors from '@middy/http-cors';
 import { APIGatewayEvent, APIGatewayProxyEvent, Context } from 'aws-lambda';
+import { SecretsManager } from 'aws-sdk';
+import { RECAPTCHA_SECRET_KEY, SECRET_ID } from '../../shared';
 import { AppConfig } from '../AppConfig';
 import { DocumentLoader, S3DocumentLoader } from '../document';
 import { EmailFormSender } from '../EmailFormSender';
@@ -12,6 +15,26 @@ import { MustacheTemplateFactory } from '../template';
 import { AJVValidatorFactory, isValidationFailure, MessageValidator, Validator } from '../validate';
 
 const LOG: Logger = LoggerFactory.getLogger();
+
+if (AppConfig.isReCaptchaEnabled) {
+  const recaptchaKey = Config.get(RECAPTCHA_SECRET_KEY);
+  if (Config.get(SECRET_ID) && recaptchaKey) {
+    new SecretsManager().getSecretValue(
+      {
+        SecretId: Config.get(SECRET_ID),
+      },
+      (err, data) => {
+        if (err) {
+          LOG.error('Failed to get secret: ', err);
+        } else {
+          LOG.debug('Setting secret key for Google Recaptcha...');
+          Config.put(RECAPTCHA_SECRET_KEY, JSON.parse(data.SecretString!)[recaptchaKey]);
+          LOG.debug('Google Recaptcha secret key set!');
+        }
+      },
+    );
+  }
+}
 
 const documentLoader: DocumentLoader = new S3DocumentLoader();
 const templateFactory = new MustacheTemplateFactory(documentLoader);
