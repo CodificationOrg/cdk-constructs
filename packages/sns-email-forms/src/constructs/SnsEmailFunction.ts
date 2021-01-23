@@ -1,21 +1,40 @@
 import { Code, Function, FunctionProps, Runtime, Tracing } from '@aws-cdk/aws-lambda';
 import { Bucket } from '@aws-cdk/aws-s3';
+import { ISecret } from '@aws-cdk/aws-secretsmanager';
 import { Subscription, SubscriptionProtocol, Topic } from '@aws-cdk/aws-sns';
-import { Construct, Duration } from '@aws-cdk/core';
+import { Arn, Construct, Duration } from '@aws-cdk/core';
 import * as path from 'path';
+import {
+  CORS_ENABLED,
+  CORS_HEADERS,
+  CORS_ORIGINS,
+  RECAPTCHA_ENABLED,
+  RECAPTCHA_SECRET_KEY,
+  SECRET_ID,
+  SNS_TOPIC_ARN,
+  TEMPLATE_BUCKET_NAME,
+} from '../shared';
 
-export interface SnsEmailFunctionProps extends FunctionProps {
-  templateBucket: Bucket;
-  snsTopic: Topic;
-  recipientEmail: string;
-  enableCors?: boolean;
-  corsHeaders?: string[];
-  corsOrigins?: string[];
-  recaptchaEnabled?: boolean;
-  recaptchaSecretKey?: string;
+export interface GoogleRecaptchaConfig {
+  secretKey: string;
+  secret?: ISecret;
 }
 
-const BASE_PROPS: Partial<FunctionProps> = {
+export interface CorsConfig {
+  enabled: boolean;
+  headers?: string[];
+  origins?: string[];
+}
+
+export interface SnsEmailFunctionProps extends Partial<FunctionProps> {
+  snsTopic: Topic;
+  templateBucket: Bucket;
+  recipientEmail: string;
+  corsConfig?: CorsConfig;
+  recaptchaConfig?: GoogleRecaptchaConfig;
+}
+
+const BASE_PROPS = {
   runtime: Runtime.NODEJS_12_X,
   tracing: Tracing.ACTIVE,
   memorySize: 256,
@@ -24,21 +43,34 @@ const BASE_PROPS: Partial<FunctionProps> = {
 
 export class SnsEmailFunction extends Function {
   public constructor(scope: Construct, id: string, props: SnsEmailFunctionProps) {
+    const { corsConfig, recaptchaConfig } = props;
+
+    const environment = {
+      ...props.environment,
+      [CORS_ENABLED]: `${corsConfig?.enabled || 'false'}`,
+      [CORS_HEADERS]: `${(corsConfig?.headers || ['*']).join(',')}`,
+      [CORS_ORIGINS]: `${(corsConfig?.origins || []).join(',')}`,
+      [TEMPLATE_BUCKET_NAME]: props.templateBucket.bucketName,
+      [SNS_TOPIC_ARN]: props.snsTopic.topicArn,
+      [RECAPTCHA_ENABLED]: 'false',
+      [RECAPTCHA_SECRET_KEY]: '',
+    };
+
+    if (recaptchaConfig) {
+      environment.RECAPTCHA_ENABLED = 'true';
+      environment.RECAPTCHA_SECRET_KEY = recaptchaConfig.secretKey;
+      if (recaptchaConfig.secret) {
+        const secretId = Arn.parse(recaptchaConfig.secret.secretArn).resourceName!;
+        environment[SECRET_ID] = secretId.substring(0, secretId.indexOf('-'));
+      }
+    }
+
     super(scope, id, {
       ...BASE_PROPS,
       ...props,
       code: Code.fromAsset(path.resolve('dist')),
       handler: `sns-email-forms.handler`,
-      environment: {
-        ...props.environment,
-        CORS_ENABLED: `${props.enableCors || 'false'}`,
-        CORS_HEADERS: `${(props.corsHeaders || ['*']).join(',')}`,
-        CORS_ORIGINS: `${(props.corsOrigins || []).join(',')}`,
-        TEMPLATE_BUCKET_NAME: props.templateBucket.bucketName,
-        RECAPTCHA_ENABLED: `${props.recaptchaEnabled || 'false'}`,
-        RECAPTCHA_SECRET_KEY: props.recaptchaSecretKey || '',
-        SNS_TOPIC_ARN: props.snsTopic.topicArn,
-      },
+      environment,
     });
 
     // tslint:disable-next-line: no-unused-expression
@@ -48,7 +80,10 @@ export class SnsEmailFunction extends Function {
       topic: props.snsTopic,
     });
     props.snsTopic.grantPublish(this);
-
     props.templateBucket.grantRead(this);
+
+    if (recaptchaConfig && recaptchaConfig.secret) {
+      recaptchaConfig.secret.grantRead(this);
+    }
   }
 }
