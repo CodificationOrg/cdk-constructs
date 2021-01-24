@@ -31,8 +31,6 @@
     "clean": "gulp clean",
     "test": "gulp test --clean",
     "build": "gulp --clean --production",
-    "version": "git add -A .",
-    "postversion": "git push && git push --tags",
     "diff": "cdk diff",
     "synth": "cdk synth",
     "deploy": "cdk deploy --require-approval never",

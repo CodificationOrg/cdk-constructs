@@ -11,7 +11,8 @@
     "clean": "lerna run clean",
     "build": "lerna run build",
     "preversion": "yarn build",
-    "release": "lerna version --conventional-commits --create-release github --yes",
+    "version": "git add -A .",
+    "postversion": "git push && git push --tags",
     "diff": "lerna run diff",
     "deploy": "lerna run deploy"
   },
