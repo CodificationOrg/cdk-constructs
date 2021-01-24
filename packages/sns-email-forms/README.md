@@ -1,6 +1,6 @@
-# AWS Serverless SNS Email Forms
+# SNS Email Forms
 
-A serverless application to simplify emailing form submissions using SNS.
+Construct that handles verifying, formatting and sending form submissions using AWS SNS.
 
 ## Architecture
 1.  Form data, in the form of a JSON payload, is POSTed.
