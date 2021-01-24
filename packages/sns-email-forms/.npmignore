@@ -1,5 +1,6 @@
 config
 test
+temp
 lib-es6
 lib/lambda
 src
