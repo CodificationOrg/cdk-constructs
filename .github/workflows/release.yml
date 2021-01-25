@@ -40,6 +40,8 @@ jobs:
         with:
           node-version: "12"
 
-      - name: Release
+      - name: Yarn install
         run: yarn install --frozen-lockfile
+
+      - name: Release
         run: npx lerna version --conventional-commits --create-release github --yes
