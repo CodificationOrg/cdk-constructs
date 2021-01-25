@@ -27,7 +27,8 @@ jobs:
       with:
         node-version: '12'
         registry-url: 'https://registry.npmjs.org'
-
+    - run: npm whoami
+    
     - name: Yarn install
       run: yarn install --frozen-lockfile
 
