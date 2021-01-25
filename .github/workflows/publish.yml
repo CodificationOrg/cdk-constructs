@@ -32,6 +32,6 @@ jobs:
       run: yarn install --frozen-lockfile
 
     - name: Publish
-      run:  npx lerna publish from-package --yes --ignore-scripts
+      run:  npx lerna publish from-package --yes
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
