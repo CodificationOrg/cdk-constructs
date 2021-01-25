@@ -13,6 +13,7 @@
     "preversion": "yarn build",
     "version": "git add -A .",
     "postversion": "git push && git push --tags",
+    "prepublishOnly": "yarn build",
     "diff": "lerna run diff",
     "deploy": "lerna run deploy"
   },
