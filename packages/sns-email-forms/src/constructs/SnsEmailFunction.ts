@@ -35,7 +35,7 @@ export interface SnsEmailFunctionProps extends Partial<FunctionProps> {
 }
 
 const BASE_PROPS = {
-  runtime: Runtime.NODEJS_12_X,
+  runtime: Runtime.NODEJS_14_X,
   tracing: Tracing.ACTIVE,
   memorySize: 256,
   timeout: Duration.seconds(60),

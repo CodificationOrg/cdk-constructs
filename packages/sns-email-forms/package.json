@@ -37,13 +37,13 @@
     "destroy": "cdk destroy"
   },
   "dependencies": {
-    "@aws-cdk/aws-lambda": "^1.86.0",
-    "@aws-cdk/aws-s3": "^1.86.0",
-    "@aws-cdk/aws-secretsmanager": "^1.86.0",
-    "@aws-cdk/aws-sns": "^1.86.0",
-    "@aws-cdk/core": "^1.86.0",
+    "@aws-cdk/aws-lambda": "^1.89.0",
+    "@aws-cdk/aws-s3": "^1.89.0",
+    "@aws-cdk/aws-secretsmanager": "^1.89.0",
+    "@aws-cdk/aws-sns": "^1.89.0",
+    "@aws-cdk/core": "^1.89.0",
     "@codification/cutwater-logging": "^0.x",
-    "cdk": "^1.86.0"
+    "cdk": "^1.89.0"
   },
   "devDependencies": {
     "@codification/cutwater-build-aws": "^0.x",
