@@ -1,6 +1,6 @@
 {
   "name": "@codification/cdk-sns-email-forms",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "A cdk construct to simplify emailing form submissions using SNS.",
   "author": "William Weiss <william@codification.org>",
   "license": "MIT",
