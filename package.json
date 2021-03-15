@@ -18,6 +18,9 @@
     "deploy": "lerna run deploy"
   },
   "devDependencies": {
+    "@codification/cutwater-build-aws": "^0.x",
+    "@codification/cutwater-build-core": "^0.x",
+    "@codification/cutwater-build-web": "^0.x",
     "lerna": "^3.22.1",
     "tslint": "^5.18.0",
     "tslint-config-prettier": "^1.18.0",
