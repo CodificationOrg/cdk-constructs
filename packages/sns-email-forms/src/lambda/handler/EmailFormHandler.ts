@@ -2,7 +2,7 @@ import { Config } from '@codification/cutwater-core';
 import { Logger, LoggerFactory } from '@codification/cutwater-logging';
 import middy from '@middy/core';
 import cors from '@middy/http-cors';
-import { APIGatewayEvent, APIGatewayProxyEvent, Context } from 'aws-lambda';
+import { APIGatewayEvent, APIGatewayProxyEvent } from 'aws-lambda';
 import { SecretsManager } from 'aws-sdk';
 import { RECAPTCHA_SECRET_KEY, SECRET_ID } from '../../shared';
 import { AppConfig } from '../AppConfig';
@@ -43,7 +43,7 @@ const messageFactory: MessageFactory = new ValidatingMessageFactory(validator, n
 const messageSender: MessageSender = new SNSMessageSender();
 const sender: EmailFormSender = new EmailFormSender(messageFactory, messageSender);
 
-const baseHandler = async (event: APIGatewayProxyEvent, context: Context) => {
+const baseHandler = async (event: APIGatewayProxyEvent) => {
   try {
     const msgCommand: MessageCommand = toMessageCommand(event);
     await sender.send(msgCommand);

@@ -23,7 +23,7 @@ export class MessageValidator implements Validator {
 
   private async validateAspectOfMessageCommand(
     cmd: MessageCommand,
-    schema: string | object | Validator,
+    schema: string | Record<string, unknown> | Validator,
     model: any,
   ): Promise<MessageCommand> {
     let validator: Validator;
@@ -37,11 +37,11 @@ export class MessageValidator implements Validator {
     return cmd;
   }
 
-  private async toValidator(schema: string | object | Validator): Promise<Validator> {
+  private async toValidator(schema: string | Record<string, unknown> | Validator): Promise<Validator> {
     if (typeof schema === 'object' && (schema as Validator).validate) {
       return schema as Validator;
     } else {
-      return await this.factory.loadValidator(schema);
+      return await this.factory.loadValidator(schema as string | Record<string, unknown>);
     }
   }
 
