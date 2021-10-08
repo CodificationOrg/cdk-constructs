@@ -23,6 +23,7 @@
     "@codification/cutwater-build-web": "^0.x",
     "@codification/eslint-config-cutwater": "^0.x",
     "lerna": "^3.22.1",
+    "ts-loader": "~8.2.0",
     "tslint": "^5.18.0",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^4.1.3",
