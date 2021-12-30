@@ -1,8 +1,9 @@
-import { Code, Function, FunctionProps, Runtime, Tracing } from '@aws-cdk/aws-lambda';
-import { Bucket } from '@aws-cdk/aws-s3';
-import { ISecret } from '@aws-cdk/aws-secretsmanager';
-import { Subscription, SubscriptionProtocol, Topic } from '@aws-cdk/aws-sns';
-import { Arn, Construct, Duration } from '@aws-cdk/core';
+import { Code, Function, FunctionProps, Runtime, Tracing } from 'aws-cdk-lib/aws-lambda';
+import { Bucket } from 'aws-cdk-lib/aws-s3';
+import { ISecret } from 'aws-cdk-lib/aws-secretsmanager';
+import { Subscription, SubscriptionProtocol, Topic } from 'aws-cdk-lib/aws-sns';
+import { Arn, ArnFormat, Duration } from 'aws-cdk-lib/core';
+import { Construct } from 'constructs';
 import * as path from 'path';
 import {
   CORS_ENABLED,
@@ -60,7 +61,7 @@ export class SnsEmailFunction extends Function {
       environment.RECAPTCHA_ENABLED = 'true';
       environment.RECAPTCHA_SECRET_KEY = recaptchaConfig.secretKey;
       if (recaptchaConfig.secret) {
-        const secretId = Arn.parse(recaptchaConfig.secret.secretArn).resourceName!;
+        const secretId = Arn.split(recaptchaConfig.secret.secretArn, ArnFormat.COLON_RESOURCE_NAME).resourceName!;
         environment[SECRET_ID] = secretId.substring(0, secretId.indexOf('-'));
       }
     }
