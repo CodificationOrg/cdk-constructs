@@ -39,11 +39,20 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: "14"
+          registry-url: "https://registry.npmjs.org"
 
       - name: Yarn install
         run: yarn install --frozen-lockfile
+
+      - name: Build
+        run: yarn build
 
       - name: Release
         run: npx lerna version --conventional-commits --create-release github --yes
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - name: Publish
+        run: npx lerna publish from-package --yes
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
