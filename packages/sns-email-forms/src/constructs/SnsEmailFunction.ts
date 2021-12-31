@@ -69,7 +69,7 @@ export class SnsEmailFunction extends Function {
     super(scope, id, {
       ...BASE_PROPS,
       ...props,
-      code: Code.fromAsset(path.resolve(__dirname, '../../dist')),
+      code: Code.fromAsset(path.resolve(__dirname)),
       handler: `sns-email-forms.handler`,
       environment,
     });

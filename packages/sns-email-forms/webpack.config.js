@@ -8,6 +8,7 @@ const isProduction = buildConfig.production;
 const webpackConfiguration = {
     mode: isProduction ? 'production' : 'development',
     entry: {
+        'index': path.join(__dirname, buildConfig.srcFolder, 'index.ts'),
         'sns-email-forms': path.join(__dirname, buildConfig.srcFolder, 'lambda/handler', 'EmailFormHandler.ts')
     },
     output: {
