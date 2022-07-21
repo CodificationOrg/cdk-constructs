@@ -5,7 +5,8 @@
   "author": "William Weiss <william@codification.org>",
   "license": "MIT",
   "private": false,
-  "main": "dist/index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "homepage": "https://github.com/CodificationOrg/cdk-constructs",
   "bugs": "https://github.com/CodificationOrg/cdk-constructs/issues",
   "typings": "lib/index.d.ts",
@@ -35,17 +36,14 @@
   "scripts": {
     "clean": "gulp clean",
     "test": "gulp test --clean",
-    "build": "gulp --clean --fix --production",
+    "build": "gulp tsc --clean --fix --production",
     "diff": "cdk diff",
     "synth": "cdk synth",
     "deploy": "cdk deploy --require-approval never",
     "destroy": "cdk destroy"
   },
   "dependencies": {
-    "@codification/cutwater-logging": "^0.x",
-    "aws-cdk-lib": "2.5.0",
-    "cdk": "2.5.0",
-    "constructs": "10.0.29"
+    "@codification/cutwater-logging": "^0.x"
   },
   "devDependencies": {
     "@codification/cutwater-core": "^0.x",
@@ -57,5 +55,10 @@
     "aws-sdk": "2.1053.0",
     "google-recaptcha": "1.1.0",
     "mustache": "4.2.0"
+  },
+  "peerDependencies": {
+    "aws-cdk-lib": "^2.0.0",
+    "cdk": "^2.0.0",
+    "constructs": "^10.0.0"
   }
 }
