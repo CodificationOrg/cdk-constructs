@@ -2,7 +2,7 @@ import { Code, Function, FunctionProps, Runtime, Tracing } from 'aws-cdk-lib/aws
 import { Bucket } from 'aws-cdk-lib/aws-s3';
 import { ISecret } from 'aws-cdk-lib/aws-secretsmanager';
 import { Subscription, SubscriptionProtocol, Topic } from 'aws-cdk-lib/aws-sns';
-import { Arn, ArnFormat, Duration } from 'aws-cdk-lib/core';
+import { Arn, ArnFormat, Duration } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as path from 'path';
 import {
