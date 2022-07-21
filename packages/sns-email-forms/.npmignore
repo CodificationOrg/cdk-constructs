@@ -8,4 +8,4 @@ gulpfile.js
 tsconfig.json
 tslint.json
 .gitignore
-webpack.config.js
+cdk.json
