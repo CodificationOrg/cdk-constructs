@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.0.19 (2022-11-07)
+
+
+### Bug Fixes
+
+* restore setup of github release user ([374800a](https://github.com/CodificationOrg/cdk-constructs/commit/374800a8d1e42ba375c460425781cf6c7296a367))
+
+
+
+
+
 ## 0.0.18 (2022-07-21)
 
 **Note:** Version bump only for package root
