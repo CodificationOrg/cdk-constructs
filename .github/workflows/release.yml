@@ -16,8 +16,8 @@ jobs:
 
       - name: Configure CI Git User
         run: |
-          git config user.name '@deploy'
-          git config user.email 'deploy@users.noreply.github.com'
+          git config user.name github-actions
+          git config user.email github-actions@github.com
 
       - name: Use Node.js 14
         uses: actions/setup-node@v3
