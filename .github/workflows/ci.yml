@@ -13,25 +13,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     
-    - name: Get yarn cache
-      uses: actions/cache@v2
+    - name: Configure Node
+      uses: actions/setup-node@v3
       with:
-        path: |
-          node_modules
-          */*/node_modules
-        key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-yarn-
-    
-    - name: Use Node.js 14
-      uses: actions/setup-node@v2
-      with:
+        cache: "yarn"
         node-version: '14'
 
-    - name: yarn install
+    - name: Install Dependencies
       run: yarn install --frozen-lockfile
 
-    - name: yarn build
+    - name: Build
       run:  yarn build
+      env:
+        NX_BRANCH: ${{ github.ref_name }}
