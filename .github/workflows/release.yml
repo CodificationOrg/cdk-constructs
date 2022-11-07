@@ -14,6 +14,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Configure CI Git User
+        run: |
+          git config user.name '@deploy'
+          git config user.email 'deploy@users.noreply.github.com'
+
       - name: Use Node.js 14
         uses: actions/setup-node@v3
         with:
