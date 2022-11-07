@@ -13,46 +13,30 @@ jobs:
     if: "!contains(github.event.head_commit.message, '[skip-ci]')"
 
     steps:
-      - uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.GH_TOKEN }}
-
-      - name: Configure CI Git User
-        run: |
-          git config user.name '@deploy'
-          git config user.email 'deploy@users.noreply.github.com'
-
-      - name: Checkout and pull branch
-        run: git checkout master && git pull
-
-      - name: Get yarn cache
-        uses: actions/cache@v2
-        with:
-          path: |
-            node_modules
-            */*/node_modules
-          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+      - uses: actions/checkout@v3
 
       - name: Use Node.js 14
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
+          cache: "yarn"
           node-version: "14"
-          registry-url: "https://registry.npmjs.org"
 
       - name: Yarn install
         run: yarn install --frozen-lockfile
 
       - name: Build
         run: yarn build
+        env:
+          NX_BRANCH: ${{ github.ref_name }}
 
       - name: Release
         run: npx lerna version --conventional-commits --create-release github --yes
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          NX_BRANCH: ${{ github.ref_name }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish
         run: npx lerna publish from-package --yes
         env:
+          NX_BRANCH: ${{ github.ref_name }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

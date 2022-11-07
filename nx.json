@@ -1,0 +1,32 @@
+{
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/nx-cloud",
+      "options": {
+        "cacheableOperations": [
+          "test",
+          "build"
+        ],
+        "accessToken": "YzYwNzA5NTQtYTg4ZC00M2IwLTlmYTMtNDE0ZTNlZTkyYzJkfHJlYWQtd3JpdGU="
+      }
+    }
+  },
+  "targetDefaults": {
+    "test": {
+      "dependsOn": [
+        "^test"
+      ],
+      "outputs": [
+        "{projectRoot}/temp"
+      ]
+    },
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "{projectRoot}/lib"
+      ]
+    }
+  }
+}
