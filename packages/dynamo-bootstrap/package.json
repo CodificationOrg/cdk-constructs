@@ -1,6 +1,6 @@
 {
   "name": "@codification/dynamo-bootstrap",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A cdk construct to bootstrap data into dynamodb.",
   "author": "William Weiss <william@codification.org>",
   "license": "MIT",
