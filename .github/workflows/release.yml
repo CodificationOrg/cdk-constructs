@@ -24,6 +24,7 @@ jobs:
         with:
           cache: "yarn"
           node-version: "14"
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Yarn install
         run: yarn install --frozen-lockfile
