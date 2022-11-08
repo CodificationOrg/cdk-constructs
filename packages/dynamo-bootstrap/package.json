@@ -1,0 +1,59 @@
+{
+  "name": "@codification/dynamo-bootstrap",
+  "version": "0.0.19",
+  "description": "A cdk construct to bootstrap data into dynamodb.",
+  "author": "William Weiss <william@codification.org>",
+  "license": "MIT",
+  "private": false,
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "homepage": "https://github.com/CodificationOrg/cdk-constructs",
+  "bugs": "https://github.com/CodificationOrg/cdk-constructs/issues",
+  "typings": "lib/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CodificationOrg/cdk-constructs.git",
+    "directory": "packages/dynamo-bootstrap"
+  },
+  "keywords": [
+    "aws",
+    "cdk",
+    "construct",
+    "utilities",
+    "support",
+    "build",
+    "dynamodb",
+    "bootstrap",
+    "codification"
+  ],
+  "prettier": "@codification/cutwater-build-core/includes/prettier-config",
+  "eslintConfig": {
+    "extends": [
+      "@codification/cutwater"
+    ]
+  },
+  "scripts": {
+    "clean": "gulp clean",
+    "test": "gulp test --clean",
+    "build": "gulp tsc --clean --fix --production",
+    "diff": "cdk diff",
+    "synth": "cdk synth",
+    "deploy": "cdk deploy --require-approval never",
+    "destroy": "cdk destroy"
+  },
+  "dependencies": {
+    "@codification/cutwater-logging": "^0.x"
+  },
+  "devDependencies": {
+    "@codification/cutwater-core": "^0.x"
+  },
+  "peerDependencies": {
+    "aws-cdk-lib": "^2.0.0",
+    "aws-sdk": "^2.1249.0",
+    "cdk": "^2.0.0",
+    "constructs": "^10.0.0"
+  }
+}
